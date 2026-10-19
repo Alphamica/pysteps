@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en" style="margin:0;padding:0;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PySteps — Learn Python by Doing | Interactive Browser Python Course</title>
+  <meta name="description" content="PySteps is a hands-on Python course with 8 interactive lessons. Real Python runs right in your browser — no installation, no setup, works on any device. One-time payment, lifetime access.">
+  <meta name="keywords" content="learn python, python tutorial for beginners, interactive python, python course, browser python, pyodide, coding for beginners, programming course, learn to code, python lessons">
+  <meta name="author" content="PySteps">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#297a2e">
+  <!-- TODO: replace with your real domain before deploying -->
+  <link rel="canonical" href="https://www.yourdomain.com/">
+
+  <!-- Open Graph (Facebook / LinkedIn / WhatsApp / Telegram link previews) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PySteps">
+  <meta property="og:title" content="PySteps — Learn Python by Doing">
+  <meta property="og:description" content="8 interactive Python lessons. Real Python runs in your browser. One-time payment, lifetime access — works on any device.">
+  <meta property="og:url" content="https://www.yourdomain.com/">
+  <meta property="og:locale" content="en_US">
+  <!-- TODO: create a 1200x630 share image and put its URL here -->
+  <meta property="og:image" content="https://www.yourdomain.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PySteps — Learn Python by Doing">
+  <meta name="twitter:description" content="8 interactive Python lessons. Real Python runs in your browser. One-time payment, lifetime access.">
+  <meta name="twitter:image" content="https://www.yourdomain.com/og-image.png">
+
+  <!-- Inline SVG favicon (stair-python mark) — no extra file needed -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23297a2e'/%3E%3Cpath d='M20 78h22V56h22V34h20' stroke='white' stroke-width='10' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cellipse cx='74' cy='24' rx='9' ry='7' fill='white'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+
+  <!-- Structured data: helps Google show rich results (Course + WebApplication) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "PySteps — Learn Python by Doing",
+    "description": "An interactive, browser-based Python course with 8 hands-on lessons. Real Python runs in your browser — no installation or setup required.",
+    "inLanguage": "en",
+    "numberOfLessons": 8,
+    "provider": {
+      "@type": "Organization",
+      "name": "PySteps",
+      "url": "https://www.yourdomain.com/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "10",
+      "priceCurrency": "MYR",
+      "availability": "https://schema.org/InStock",
+      "description": "One-time payment for lifetime access"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "PySteps",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Any (web browser)",
+    "browserRequirements": "Requires JavaScript and WebAssembly support",
+    "offers": {
+      "@type": "Offer",
+      "price": "10",
+      "priceCurrency": "MYR"
+    }
+  }
+  </script>
+</head>
+<body>
+  <noscript>
+    <div style="max-width:520px;margin:80px auto;padding:24px;font-family:sans-serif;text-align:center;color:#0f172a;">
+      <h1>PySteps needs JavaScript</h1>
+      <p>PySteps runs real Python in your browser using WebAssembly. Please enable JavaScript to start learning.</p>
+    </div>
+  </noscript>
+<script>
+(function(){
+  var s = document.createElement('style');
+  s.textContent = ':root{--bg:#faf9f4;--card:#ffffff;--text:#0f172a;--muted:#64748b;--accent:#297a2e;--accent-soft:rgba(41,122,46,.14);--accent2:#d97706;--accent2-soft:rgba(217,119,6,.14);--border:rgba(15,23,42,.08);--codebg:#16202c;--codetxt:#e6edf3}'
+  + 'body{margin:0;overflow-x:hidden;max-width:100%}'
+  + '*{box-sizing:border-box}'
+  + '.reveal{opacity:0;transform:translateY(16px);animation:fu .55s ease forwards}@keyframes fu{to{opacity:1;transform:translateY(0)}}'
+  + '.lesson-btn{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 12px;border-radius:10px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;font-size:14px;transition:background .15s,color .15s,border-color .15s;white-space:nowrap}'
+  + '.lesson-btn:hover{background:rgba(41,122,46,.07);color:var(--text)}'
+  + '.lesson-btn.active{background:var(--accent-soft);color:var(--text);border-color:var(--accent);font-weight:600}'
+  + '.lesson-btn .num{width:22px;height:22px;border-radius:6px;background:rgba(15,23,42,.06);display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;font-family:monospace}'
+  + '.lesson-btn.active .num{background:var(--accent);color:#fff}'
+  + '.btn{padding:9px 18px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;transition:transform .1s,box-shadow .15s,opacity .15s;border:1px solid transparent;font-family:inherit}'
+  + '.btn:active{transform:translateY(1px)}'
+  + '.btn:disabled{opacity:.45;cursor:not-allowed}'
+  + '.btn-primary{background:var(--accent-soft);color:var(--text);border-color:var(--accent)}'
+  + '.btn-primary:not(:disabled):hover{box-shadow:0 4px 14px rgba(41,122,46,.25)}'
+  + '.btn-secondary{background:var(--card);color:var(--text);border-color:var(--border)}'
+  + '.btn-secondary:hover{border-color:var(--accent)}'
+  + '.btn-ghost{background:transparent;color:var(--muted);border-color:transparent}'
+  + '.btn-ghost:hover{color:var(--accent)}'
+  + '.code-surface{background:var(--codebg);color:var(--codetxt);border-radius:12px;font-family:"JetBrains Mono",ui-monospace,monospace}'
+  + 'textarea.editor{width:100%;min-height:200px;resize:vertical;background:transparent;color:var(--codetxt);border:none;outline:none;padding:16px;font-size:13.5px;line-height:1.65;font-family:inherit;tab-size:2;caret-color:#7ee787}'
+  + '.console{min-height:90px;max-height:260px;overflow:auto;padding:14px 16px;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;border-top:1px solid rgba(255,255,255,.08)}'
+  + '.console .err{color:#ff7b72}'
+  + '.console .ok{color:#7ee787}'
+  + '.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:.04em}'
+  + '.callout{border-left:3px solid var(--accent);background:var(--accent-soft);padding:10px 14px;border-radius:0 8px 8px 0;font-size:14px;line-height:1.6}'
+  + 'pre.snip{background:var(--codebg);color:var(--codetxt);border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.6;overflow-x:auto;font-family:"JetBrains Mono",ui-monospace,monospace;margin:10px 0}'
+  + '.dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0}'
+  + '.pulse{animation:pl 1.2s ease-in-out infinite}@keyframes pl{0%,100%{opacity:1}50%{opacity:.35}}'
+  + '#cover{background:radial-gradient(900px 520px at 50% -8%, var(--accent-soft), transparent 62%), radial-gradient(700px 400px at 90% 110%, var(--accent2-soft), transparent 60%), var(--bg);padding:90px 24px 80px;text-align:center;min-height:100%}'
+  + '#cover.hide{display:none}'
+  + '#app{display:none}'
+  + '.cover-card{margin:0 auto}'
+  + '.cover-card{text-align:center;max-width:480px;width:100%;animation:coverIn .7s cubic-bezier(.2,.8,.2,1) both}@keyframes coverIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}'
+  + '.stair-icon{width:130px;height:130px;margin:0 auto 18px;display:block;animation:bob 3.2s ease-in-out infinite}@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}'
+  + '.cover-eyebrow{font-size:13px;letter-spacing:.28em;text-transform:uppercase;font-weight:600;color:var(--accent);margin:0 0 10px}'
+  + '.cover-title{font-size:46px;font-weight:700;letter-spacing:-.02em;line-height:1.05;margin:0 0 12px;color:var(--text)}'
+  + '.cover-sub{font-size:17px;color:var(--muted);margin:0 auto 30px;line-height:1.55;max-width:340px}'
+  + '.start-btn{display:inline-flex;align-items:center;gap:10px;padding:15px 40px;border-radius:14px;background:var(--accent);color:#fff;font-size:17px;font-weight:600;border:none;cursor:pointer;font-family:inherit;transition:transform .12s,box-shadow .2s;box-shadow:0 6px 22px rgba(41,122,46,.38)}'
+  + '.start-btn:hover{box-shadow:0 10px 30px rgba(41,122,46,.5);transform:translateY(-2px)}'
+  + '.start-btn:active{transform:translateY(1px);box-shadow:0 3px 12px rgba(41,122,46,.35)}'
+  + '.start-btn .arr{transition:transform .2s}.start-btn:hover .arr{transform:translateX(4px)}'
+  + '.cover-foot{margin-top:26px;font-size:12px;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}'
+  + '.cover-foot .sep{width:3px;height:3px;border-radius:50%;background:var(--muted);opacity:.5}'
+  + '@media (max-width:520px){#cover{padding:64px 18px 56px}.stair-icon{width:108px;height:108px}.cover-eyebrow{font-size:11px;letter-spacing:.22em}.cover-title{font-size:36px}.cover-sub{font-size:15px;margin-bottom:24px;max-width:300px}.start-btn{padding:13px 32px;font-size:15px}.cover-foot{font-size:11px;gap:10px}}'
+  + '@media (max-width:360px){.stair-icon{width:92px;height:92px}.cover-title{font-size:30px}.cover-sub{font-size:14px}.start-btn{padding:12px 26px;font-size:14px}}'
+  + '@media (min-width:1200px){.cover-card{max-width:520px}.stair-icon{width:150px;height:150px}.cover-title{font-size:52px}}';
+  document.head.appendChild(s);
+})();
+</script>
+<div id="cover">
+  <div class="cover-card">
+    <svg class="stair-icon" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stair-shaped python">
+      <defs>
+        <linearGradient id="snakeGrad" x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0%" stop-color="#1f5e24"/>
+          <stop offset="55%" stop-color="#297a2e"/>
+          <stop offset="100%" stop-color="#3d9c44"/>
+        </linearGradient>
+      </defs>
+      <rect x="26" y="158" width="44" height="18" rx="5" fill="rgba(41,122,46,.09)"/>
+      <rect x="70" y="118" width="44" height="18" rx="5" fill="rgba(41,122,46,.11)"/>
+      <rect x="114" y="78" width="44" height="18" rx="5" fill="rgba(41,122,46,.13)"/>
+      <path d="M 30 167 H 74 V 127 H 118 V 87 H 158 V 52" stroke="url(#snakeGrad)" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="52" cy="167" r="3" fill="#144718" opacity=".55"/>
+      <circle cx="74" cy="147" r="3" fill="#144718" opacity=".55"/>
+      <circle cx="96" cy="127" r="3" fill="#144718" opacity=".55"/>
+      <circle cx="118" cy="107" r="3" fill="#144718" opacity=".55"/>
+      <circle cx="138" cy="87" r="3" fill="#144718" opacity=".55"/>
+      <circle cx="158" cy="68" r="3" fill="#144718" opacity=".55"/>
+      <ellipse cx="158" cy="42" rx="17" ry="14" fill="#297a2e"/>
+      <circle cx="164" cy="38" r="3" fill="#ffffff"/>
+      <circle cx="164.8" cy="38" r="1.4" fill="#0f172a"/>
+      <path d="M 173 42 L 184 38 M 173 42 L 184 46" stroke="#d97706" stroke-width="2.2" stroke-linecap="round"/>
+    </svg>
+    <p class="cover-eyebrow">Python step by step</p>
+    <h1 class="cover-title">PySteps</h1>
+    <p class="cover-sub">Begin your first python lesson now!</p>
+    <button id="startBtn" class="start-btn">Start <span class="arr">&rarr;</span></button>
+    <p class="cover-foot"><span>8 interactive lessons</span><span class="sep"></span><span>Runs in your browser</span></p>
+  </div>
+</div>
+<div id="app" style="background-color:transparent;box-sizing:border-box;">
+<div style="font-family:'Fredoka',sans-serif;background:radial-gradient(900px 400px at 15% -5%, var(--accent-soft), transparent 60%), var(--bg);color:var(--text);">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+
+  <div class="reveal flex flex-wrap items-center gap-4 mb-6">
+    <div style="width:46px;height:46px;border-radius:13px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2v2a4 4 0 0 0 8 0v-2h2a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/></svg>
+    </div>
+    <div style="flex:1;min-width:200px;">
+      <h1 class="text-2xl sm:text-3xl font-bold" style="letter-spacing:-.01em;line-height:1.2">PySteps <span style="font-weight:400;color:var(--muted)">— learn Python by doing</span></h1>
+      <p class="text-sm mt-1" style="color:var(--muted)">Real Python runs right in your browser.</p>
+    </div>
+  </div>
+
+  <div class="reveal mb-6 flex flex-wrap items-center gap-2 text-xs" style="color:var(--muted)">
+    <span id="statusDot" class="dot pulse" style="background:var(--accent2)"></span>
+    <span id="statusText">Loading the Python engine (first load takes a few seconds)…</span>
+    <button id="retryBtn" class="btn btn-secondary" style="display:none;padding:3px 12px;font-size:11px">Retry</button>
+  </div>
+
+  <div class="flex flex-col lg:flex-row gap-6">
+
+    <aside class="lg:w-60 flex-shrink-0">
+      <div class="rounded-2xl p-3" style="background:var(--card);border:1px solid var(--border)">
+        <p class="text-xs uppercase tracking-wider font-semibold mb-2 px-2" style="color:var(--muted)">Course path</p>
+        <div id="lessonList" class="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-visible" style="padding-bottom:2px"></div>
+      </div>
+      <div class="mt-4 rounded-2xl p-4 text-xs" style="background:var(--accent2-soft);border:1px solid var(--accent2);color:var(--text);line-height:1.6">
+        <strong style="color:var(--accent2)">Tip:</strong> Press <span style="font-family:monospace;background:rgba(0,0,0,.08);padding:1px 6px;border-radius:5px">Ctrl</span> + <span style="font-family:monospace;background:rgba(0,0,0,.08);padding:1px 6px;border-radius:5px">Enter</span> to run code instantly.
+      </div>
+    </aside>
+
+    <main class="flex-1 min-w-0">
+      <div id="lessonBody" class="rounded-2xl p-5 sm:p-7" style="background:var(--card);border:1px solid var(--border)"></div>
+      <div class="flex flex-wrap justify-between mt-4 gap-3">
+        <button id="prevBtn" class="btn btn-secondary">← Previous</button>
+        <button id="nextBtn" class="btn btn-primary">Next lesson →</button>
+      </div>
+    </main>
+  </div>
+
+  <p class="text-center text-xs mt-10" style="color:var(--muted)">Built with Pyodide (CPython + WebAssembly). Your code never leaves this page.</p>
+</div>
+</div>
+</div>
+
+<script>
+(function(){
+  var LESSONS = [
+    {
+      title: "Hello, Python!", mins: 3,
+      intro: '<p>Every programming journey starts with <strong>print()</strong> — Python\'s way of showing you something. Put text inside quotes and it appears below.</p><pre class="snip">print("Hello, world!")</pre><div class="callout">Quotes can be single \'...\' or double "..." — just match them.</div>',
+      example: 'print("I am learning Python!")\nprint(2 + 3)',
+      exercise: {
+        task: '<p>Make Python print exactly: <code style="font-family:monospace">Hello, Python!</code> (capital H and P, with the exclamation mark).</p>',
+        starter: '# Write your code below this line\n',
+        solution: 'print("Hello, Python!")',
+        check: function(out){
+          if(!out || !out.trim()) return {pass:false, msg:"Nothing was printed. Try: print(\"Hello, Python!\")"};
+          if(out.trim() === "Hello, Python!") return {pass:true, msg:"Perfect — you printed exactly the right text."};
+          return {pass:false, msg:"Almost! Expected exactly: Hello, Python! — you printed: " + JSON.stringify(out.trim())};
+        }
+      }
+    },
+    {
+      title: "Variables & Types", mins: 5,
+      intro: '<p>A <strong>variable</strong> is a named box that stores a value. Use <code>=</code> to put something inside.</p><pre class="snip">name = "Ada"      # a string (text)\nage = 36          # an integer (whole number)\nheight = 1.68     # a float (decimal)</pre><p>Text needs quotes; numbers do not.</p>',
+      example: 'fruit = "mango"\ncount = 5\nprint(fruit, count)',
+      exercise: {
+        task: '<p>Create two variables: <code>name</code> containing the string <code>"Ada"</code>, and <code>age</code> containing the number <code>36</code>.</p>',
+        starter: '# Create name and age below\n',
+        solution: 'name = "Ada"\nage = 36',
+        check: function(out, py){
+          var n = gv(py,'name'), a = gv(py,'age');
+          if(n === undefined) return {pass:false, msg:"I don\'t see a variable called \'name\'. Add: name = \"Ada\""};
+          if(n !== "Ada") return {pass:false, msg:"name should be exactly \"Ada\" (capital A). Yours: " + JSON.stringify(String(n))};
+          if(a === undefined) return {pass:false, msg:"I don\'t see a variable called \'age\'. Add: age = 36"};
+          if(a !== 36) return {pass:false, msg:"age should be the number 36 (no quotes). Yours: " + String(a)};
+          return {pass:true, msg:"Both variables are correct. name = " + n + ", age = " + a};
+        }
+      }
+    },
+    {
+      title: "Numbers & Math", mins: 5,
+      intro: '<p>Python is a great calculator. Operators: <code>+</code> <code>-</code> <code>*</code> <code>/</code> and <code>**</code> for "to the power of".</p><pre class="snip">area = 3.14 * 5 ** 2   # pi * radius squared\nprint(area)            # 78.5</pre>',
+      example: 'print(7 * 6)\nprint(2 ** 10)\nprint(10 / 4)',
+      exercise: {
+        task: '<p>A circle has radius <code>5</code> and <code>pi = 3.14</code> is given. Compute its area (<code>pi * radius ** 2</code>) and store it in a variable called <code>area</code>.</p>',
+        starter: 'pi = 3.14\nradius = 5\n# Compute area below\n',
+        solution: 'pi = 3.14\nradius = 5\narea = pi * radius ** 2',
+        check: function(out, py){
+          var a = gv(py,'area');
+          if(a === undefined) return {pass:false, msg:"I don\'t see a variable \'area\'. Store the result in it: area = pi * radius ** 2"};
+          if(Math.abs(a - 78.5) > 0.01) return {pass:false, msg:"area should be 78.5. Yours: " + a + " — remember ** for squaring."};
+          return {pass:true, msg:"Correct! area = " + a};
+        }
+      }
+    },
+    {
+      title: "Strings", mins: 5,
+      intro: '<p>Strings are pieces of text. Stick them together with <code>+</code>, repeat with <code>*</code>, and change case with <code>.upper()</code> / <code>.lower()</code>.</p><pre class="snip">greeting = "Hello" + " " + "there"\nprint(greeting.upper())   # HELLO THERE</pre>',
+      example: 'word = "Python"\nprint(word + " is fun")\nprint(word * 3)',
+      exercise: {
+        task: '<p>Using string concatenation (<code>+</code>), build the variable <code>greeting</code> so it equals exactly <code>"Hello, World!"</code>. Combine the two pieces given.</p>',
+        starter: 'part1 = "Hello,"\npart2 = "World!"\n# Join them with a space into `greeting`\n',
+        solution: 'part1 = "Hello,"\npart2 = "World!"\ngreeting = part1 + " " + part2',
+        check: function(out, py){
+          var g = gv(py,'greeting');
+          if(g === undefined) return {pass:false, msg:"I don\'t see \'greeting\'. Use: greeting = part1 + \" \" + part2"};
+          if(g !== "Hello, World!") return {pass:false, msg:"greeting should be \"Hello, World!\" — yours: " + JSON.stringify(String(g)) + ". Did you include the space?"};
+          return {pass:true, msg:"Nicely joined: " + g};
+        }
+      }
+    },
+    {
+      title: "Lists", mins: 6,
+      intro: '<p>A <strong>list</strong> holds multiple values in order, in square brackets. Add items with <code>.append()</code>.</p><pre class="snip">fruits = ["apple", "banana"]\nfruits.append("cherry")\nprint(fruits[0])   # apple (counting starts at 0!)\nprint(len(fruits)) # 3</pre>',
+      example: 'nums = [10, 20, 30]\nprint(nums[1])\nnums.append(40)\nprint(len(nums))',
+      exercise: {
+        task: '<p>The list <code>fruits</code> starts with two items. Add <code>"cherry"</code> to the end using <code>.append()</code>.</p>',
+        starter: 'fruits = ["apple", "banana"]\n# Add "cherry" below\n',
+        solution: 'fruits = ["apple", "banana"]\nfruits.append("cherry")',
+        check: function(out, py){
+          var f = gv(py,'fruits');
+          if(f === undefined) return {pass:false, msg:"I don\'t see \'fruits\'."};
+          var arr;
+          try { arr = (f && f.toJs) ? f.toJs() : f; if(f && f.destroy) f.destroy(); } catch(e){ return {pass:false, msg:"fruits should be a list."}; }
+          var want = ["apple","banana","cherry"];
+          var got = (arr && arr.slice) ? arr.slice() : arr;
+          if(JSON.stringify(got) !== JSON.stringify(want)) return {pass:false, msg:"fruits should be " + JSON.stringify(want) + " — yours: " + JSON.stringify(got)};
+          return {pass:true, msg:"List updated: " + JSON.stringify(arr)};
+        }
+      }
+    },
+    {
+      title: "If / Else Decisions", mins: 6,
+      intro: '<p><code>if</code> runs code only when a condition is true. Indentation (4 spaces) matters in Python!</p><pre class="snip">score = 85\nif score >= 50:\n    result = "pass"\nelse:\n    result = "fail"\nprint(result)</pre>',
+      example: 'temp = 30\nif temp > 25:\n    print("Warm day")\nelse:\n    print("Cool day")',
+      exercise: {
+        task: '<p><code>score = 85</code> is given. Write an <code>if/else</code>: if <code>score >= 50</code>, set <code>result = "pass"</code>, otherwise set <code>result = "fail"</code>.</p>',
+        starter: 'score = 85\n# Write your if/else below\n',
+        solution: 'score = 85\nif score >= 50:\n    result = "pass"\nelse:\n    result = "fail"',
+        check: function(out, py){
+          var r = gv(py,'result');
+          if(r === undefined) return {pass:false, msg:"I don\'t see \'result\'. Remember to set it inside both branches (indented!)."};
+          if(r !== "pass") return {pass:false, msg:"With score=85, result should be \"pass\". Yours: " + JSON.stringify(String(r))};
+          return {pass:true, msg:"Correct — result = \"" + r + "\""};
+        }
+      }
+    },
+    {
+      title: "Loops", mins: 7,
+      intro: '<p>Loops repeat work. A <code>for</code> loop steps through items; <code>range(1,6)</code> gives 1,2,3,4,5.</p><pre class="snip">total = 0\nfor n in range(1, 6):\n    total = total + n\nprint(total)   # 15</pre>',
+      example: 'for i in range(3):\n    print("Hi", i)',
+      exercise: {
+        task: '<p>Use a <code>for</code> loop with <code>range(1, 6)</code> to add up the numbers 1 through 5, storing the sum in <code>total</code>.</p>',
+        starter: 'total = 0\n# Write your loop below\n',
+        solution: 'total = 0\nfor n in range(1, 6):\n    total = total + n',
+        check: function(out, py){
+          var t = gv(py,'total');
+          if(t === undefined) return {pass:false, msg:"I don\'t see \'total\'. Start with total = 0 and add inside the loop."};
+          if(t !== 15) return {pass:false, msg:"1+2+3+4+5 = 15. Yours: " + t + " — check your range (range(1,6) stops at 5)."};
+          return {pass:true, msg:"Loop works — total = 15"};
+        }
+      }
+    },
+    {
+      title: "Functions", mins: 7,
+      intro: '<p>A <strong>function</strong> packages reusable code. Define it with <code>def</code>, then call it by name.</p><pre class="snip">def double(x):\n    return x * 2\n\nprint(double(7))   # 14</pre>',
+      example: 'def greet(name):\n    return "Hello, " + name + "!"\n\nprint(greet("Ada"))',
+      exercise: {
+        task: '<p>Define a function called <code>double</code> that takes one argument <code>x</code> and returns <code>x * 2</code>.</p>',
+        starter: '# Define double(x) below\n',
+        solution: 'def double(x):\n    return x * 2',
+        check: function(out, py){
+          var fn = gv(py,'double');
+          if(fn === undefined) return {pass:false, msg:"I don\'t see a function \'double\'. Use: def double(x): return x * 2"};
+          var r1, r2;
+          try { r1 = fn(7); r2 = fn(100); } catch(e){ return {pass:false, msg:"Calling double() caused an error: " + e.message}; }
+          if(r1 !== 14) return {pass:false, msg:"double(7) should return 14. Yours returned: " + r1};
+          return {pass:true, msg:"Function works — double(7) = 14, double(100) = " + r2};
+        }
+      }
+    },
+    {
+      sandbox: true, title: "Free Sandbox", mins: "∞",
+      intro: '<p>No lesson here — experiment freely. Anything you\'ve learned works. Try importing <code>math</code>, writing more loops, or building a small calculator.</p>',
+      example: 'import math\nprint(math.sqrt(16))\n\nfor i in range(1, 6):\n    print(i, "squared is", i*i)',
+      starter: '# Free play — write any Python you like!\nprint("Go wild.")\n'
+    }
+  ];
+
+  var idx = 0, pyodide = null, ready = false, curOut = "", loadTimer = null, pyStarting = false, stdoutSet = false, textDec = null;
+
+  function gv(py, name){ try { return py.globals.get(name); } catch(e){ return undefined; } }
+  function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  var listEl = document.getElementById('lessonList');
+  function renderSidebar(){
+    listEl.innerHTML = "";
+    LESSONS.forEach(function(L, i){
+      var b = document.createElement('button');
+      b.className = 'lesson-btn' + (i===idx?' active':'');
+      var num = L.sandbox ? '★' : (i+1);
+      b.innerHTML = '<span class="num">' + num + '</span><span>' + L.title + '</span>';
+      b.onclick = function(){ idx = i; renderLesson(); renderSidebar(); };
+      listEl.appendChild(b);
+    });
+  }
+
+  var body = document.getElementById('lessonBody');
+  function renderLesson(){
+    var L = LESSONS[idx];
+    var html = '';
+    html += '<div id="lessonHeader" class="flex flex-wrap items-center gap-3 mb-4">'
+      + '<h2 class="text-xl sm:text-2xl font-bold" style="line-height:1.25">' + L.title + '</h2>'
+      + '<span class="pill" style="background:var(--accent2-soft);color:var(--accent2)">' + (L.sandbox ? 'free play' : L.mins + ' min') + '</span>'
+      + '</div>';
+    html += '<div style="line-height:1.7;font-size:15px;color:var(--text)">' + L.intro + '</div>';
+
+    if(L.example){
+      html += '<div class="mt-5"><div class="flex items-center justify-between mb-2"><p class="text-xs uppercase tracking-wider font-semibold" style="color:var(--muted)">Try this example</p>'
+        + '<button id="loadEx" class="btn btn-ghost" style="padding:5px 12px;font-size:12px">Load into editor ↓</button></div>'
+        + '<pre class="snip" style="margin:0">' + escapeHtml(L.example) + '</pre></div>';
+    }
+
+    if(!L.sandbox && L.exercise){
+      html += '<div class="mt-6 p-4 rounded-xl" style="background:var(--accent2-soft);border:1px solid var(--accent2)">'
+        + '<p class="text-xs uppercase tracking-wider font-semibold mb-1.5" style="color:var(--accent2)">Your turn — practice</p>'
+        + '<div style="line-height:1.6;font-size:14.5px">' + L.exercise.task + '</div></div>';
+    }
+
+    html += '<div class="code-surface mt-5">'
+      + '<div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.08);font-size:12px;color:#8b949e">'
+      + '<span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span>'
+      + '<span style="margin-left:8px;font-family:inherit">main.py</span></div>'
+      + '<textarea id="editor" class="editor" spellcheck="false">' + escapeHtml(L.sandbox ? L.starter : L.exercise.starter) + '</textarea>'
+      + '</div>';
+
+    html += '<div class="flex flex-wrap gap-2 mt-3">'
+      + '<button id="runBtn" class="btn btn-primary" ' + (ready?'':'disabled') + '>▶ Run</button>'
+      + (L.sandbox ? '' : '<button id="checkBtn" class="btn btn-secondary" ' + (ready?'':'disabled') + '>✓ Check solution</button>')
+      + '<button id="resetBtn" class="btn btn-secondary">Reset</button>'
+      + (L.sandbox ? '' : '<button id="solBtn" class="btn btn-ghost">Show solution</button>')
+      + '<button id="clearBtn" class="btn btn-ghost">Clear output</button>'
+      + '</div>';
+
+    if(!L.sandbox && L.exercise){
+      html += '<div id="solBox" style="display:none" class="mt-3">'
+        + '<pre class="snip" style="margin:0 0 8px">' + escapeHtml(L.exercise.solution) + '</pre>'
+        + '<button id="copySol" class="btn btn-secondary" style="padding:6px 14px;font-size:12px">Use this solution</button></div>';
+    }
+
+    html += '<div class="code-surface mt-3">'
+      + '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.08);font-size:11px;color:#8b949e;letter-spacing:.08em;text-transform:uppercase">Output</div>'
+      + '<div id="console" class="console"><span style="color:#8b949e">Press Run to see output here…</span></div>'
+      + '</div>';
+
+    body.innerHTML = html;
+
+    var ed = document.getElementById('editor');
+    ed.addEventListener('keydown', function(e){
+      if(e.key === 'Tab'){ e.preventDefault(); var s=ed.selectionStart, en=ed.selectionEnd; ed.value=ed.value.slice(0,s)+'  '+ed.value.slice(en); ed.selectionStart=ed.selectionEnd=s+2; }
+      if((e.ctrlKey||e.metaKey) && e.key === 'Enter'){ e.preventDefault(); doRun(); }
+    });
+    document.getElementById('runBtn').onclick = doRun;
+        document.getElementById('resetBtn').onclick = function(){ ed.value = L.sandbox ? L.starter : L.exercise.starter; };
+    var le = document.getElementById('loadEx');
+    if(le) le.onclick = function(){ ed.value = L.example; ed.scrollTop=0; };
+    var cb = document.getElementById('checkBtn');
+    if(cb) cb.onclick = doCheck;
+    var sb = document.getElementById('solBtn');
+    if(sb) sb.onclick = function(){ var box = document.getElementById('solBox'); box.style.display = box.style.display === 'none' ? 'block' : 'none'; };
+    var cs = document.getElementById('copySol');
+    if(cs) cs.onclick = function(){ ed.value = L.exercise.solution; };
+    var clr = document.getElementById('clearBtn');
+    if(clr) clr.onclick = function(){ showConsole('<span style="color:#8b949e">Output cleared — press Run to execute your current code.</span>'); };
+
+    document.getElementById('prevBtn').disabled = (idx === 0);
+    document.getElementById('nextBtn').textContent = (idx === LESSONS.length-1) ? 'Restart course ↺' : 'Next lesson →';
+  }
+
+  var CLEANUP = "for _n in ['name','age','area','greeting','fruits','result','total','double','square','pi','radius','score','part1','part2']:\n    globals().pop(_n, None)\n";
+  function runUser(code){
+    curOut = "";
+    textDec = new TextDecoder();
+    try { pyodide.runPython(CLEANUP); } catch(e){}
+    var ok = false, err = null;
+    try { pyodide.runPython(code); ok = true; }
+    catch(e){ err = (e && e.message) ? e.message : String(e); }
+    try { if(textDec) curOut += textDec.decode(); } catch(e){}
+    return ok ? {ok:true, out:curOut} : {ok:false, out:curOut, err:err};
+  }
+  function showConsole(html){ var c = document.getElementById('console'); if(c){ c.innerHTML = html; setTimeout(function(){ c.scrollTop = c.scrollHeight; }, 20); } }
+
+  function doRun(){
+    if(!ready){ setStatus(false,"Python engine still loading — please wait."); return; }
+    var code = document.getElementById('editor').value;
+    var r = runUser(code);
+    var html = '';
+    if(r.out) html += '<span>' + escapeHtml(r.out) + '</span>';
+    if(!r.ok) html += (r.out?'\n':'') + '<span class="err">Error: ' + escapeHtml(r.err) + '</span>';
+    if(r.ok && !r.out) html += '<span style="color:#8b949e">(no output — your code ran, but printed nothing)</span>';
+    showConsole(html);
+  }
+
+  function doCheck(){
+    if(!ready){ setStatus(false,"Python engine still loading — please wait."); return; }
+    var L = LESSONS[idx];
+    var code = document.getElementById('editor').value;
+    var r = runUser(code);
+    var html = '';
+    if(r.out) html += '<span>' + escapeHtml(r.out) + '</span>';
+    if(!r.ok){
+      html += (r.out?'\n':'') + '<span class="err">Error in your code: ' + escapeHtml(r.err) + '</span>';
+      showConsole(html); return;
+    }
+    var res = L.exercise.check(r.out, pyodide);
+    if(res.pass){
+      html += '\n<span class="ok">✓ ' + escapeHtml(res.msg) + '</span>';
+    } else {
+      html += '\n<span class="err">✗ Not quite: ' + escapeHtml(res.msg) + '</span>';
+    }
+    showConsole(html);
+  }
+
+  document.getElementById('prevBtn').onclick = function(){ if(idx>0){ idx--; renderLesson(); renderSidebar(); } };
+  document.getElementById('nextBtn').onclick = function(){
+    if(idx === LESSONS.length-1){ idx=0; } else if(idx < LESSONS.length-1){ idx++; }
+    renderLesson(); renderSidebar();
+  };
+
+  function setStatus(ok, msg, showRetry){
+    var d = document.getElementById('statusDot'), t = document.getElementById('statusText');
+    d.style.background = ok ? 'var(--accent)' : (showRetry ? '#dc2626' : 'var(--accent2)');
+    d.classList.toggle('pulse', !ok);
+    t.textContent = msg;
+    document.getElementById('retryBtn').style.display = showRetry ? 'inline-block' : 'none';
+  }
+  function enableRun(){
+    ready = true;
+    if(loadTimer){ clearTimeout(loadTimer); loadTimer = null; }
+    setStatus(true, "Python engine ready — write some code and press Run.");
+    ['runBtn','checkBtn'].forEach(function(id){ var b=document.getElementById(id); if(b) b.disabled=false; });
+  }
+  function startPy(){
+    if(pyStarting) return;
+    pyStarting = true;
+    setStatus(false, "Loading the Python engine (first load takes a few seconds)…");
+    document.getElementById('retryBtn').style.display = 'none';
+    (function init(n){
+      if(typeof loadPyodide === 'undefined'){
+        if(n<80){ setTimeout(function(){ init(n+1); }, 250); return; }
+        pyStarting = false;
+        setStatus(false, "Could not load the Python engine script. Check your connection and click Retry.", true);
+        return;
+      }
+      loadTimer = setTimeout(function(){
+        if(!ready) setStatus(false, "Still loading… the engine is ~25MB. If it stays stuck, click Retry.", true);
+      }, 30000);
+      loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/" }).then(function(py){
+        pyodide = py;
+        if(!stdoutSet){
+          stdoutSet = true;
+          textDec = new TextDecoder();
+          var appendOut = function(s){
+            var chunk = (typeof s === 'string') ? s : (textDec ? textDec.decode(s, {stream:true}) : '');
+            curOut += chunk;
+            return s.length;
+          };
+          try { pyodide.setStdout({ write: appendOut }); } catch(e){}
+          try { pyodide.setStderr({ write: appendOut }); } catch(e){}
+        }
+        try {
+          pyodide.runPython("import builtins as _b, js as _js\ndef _inp(p=''):\n    _r = _js.prompt(str(p))\n    return '' if _r is None else _r\n_b.input = _inp");
+        } catch(e){}
+        enableRun();
+      }).catch(function(e){
+        pyStarting = false;
+        setStatus(false, "Failed to load Python: " + (e && e.message ? e.message : e) + " — click Retry.", true);
+      });
+    })(0);
+  }
+  document.getElementById('retryBtn').onclick = function(){ pyStarting = false; startPy(); };
+
+  renderLesson();
+  renderSidebar();
+  startPy();
+  var cover = document.getElementById('cover');
+  var app = document.getElementById('app');
+  var startBtn = document.getElementById('startBtn');
+  function dismissCover(){
+    if(!cover) return;
+    cover.classList.add('hide');
+    if(app) app.style.display = 'block';
+    setTimeout(function(){ if(cover && cover.parentNode) cover.parentNode.removeChild(cover); }, 50);
+  }
+  if(startBtn) startBtn.addEventListener('click', dismissCover);
+  document.addEventListener('keydown', function(e){
+    if(cover && cover.parentNode && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); dismissCover(); }
+  });
+})();
+</script>
+
+</body>
+</html>
