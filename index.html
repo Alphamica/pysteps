@@ -716,13 +716,81 @@
       alert(error.message);
     } else {
       document.getElementById('authForm').style.display = 'none';
+<!-- Supabase Login & Paywall for PySteps -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://kgaoiqxckwzkznqncyh.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_ZkoHoOY2CXK-d-mz8VuY4w_kIX4d_vV";
+
+  const { createClient } = window.supabase;
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  let currentUser = null;
+  let isPaidUser = false;
+
+  async function checkAccess() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      showLoginScreen();
+      return;
+    }
+    currentUser = session.user;
+    
+    try {
+      const { data } = await supabase
+        .from('profiles')
+        .select('paid')
+        .eq('id', currentUser.id)
+        .single();
+      isPaidUser = data?.paid === true;
+    } catch(e) {
+      isPaidUser = false;
+    }
+    
+    if (!isPaidUser) {
+      showPaywall();
+    } else {
+      showLogoutButton();
+    }
+  }
+
+  function showLoginScreen() {
+    document.body.innerHTML = `
+      <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f0fdf4,#e0f2fe);padding:20px;">
+        <div style="background:white;padding:40px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.1);max-width:400px;width:100%;text-align:center;">
+          <h2 style="color:#166534;margin-bottom:8px;">🐍 PySteps</h2>
+          <p style="color:#666;margin-bottom:30px;">Sign in to start learning Python</p>
+          
+          <div id="authForm">
+            <input type="email" id="email" placeholder="Your email" style="width:100%;padding:12px;margin-bottom:15px;border:1px solid #ddd;border-radius:8px;font-size:16px;" />
+            <input type="password" id="password" placeholder="Password" style="width:100%;padding:12px;margin-bottom:20px;border:1px solid #ddd;border-radius:8px;font-size:16px;" />
+            <button onclick="signUp()" style="width:100%;padding:12px;background:#22c55e;color:white;border:none;border-radius:8px;font-size:16px;font-weight:bold;cursor:pointer;">Sign Up / Sign In</button>
+          </div>
+          <div id="authMessage" style="display:none;margin-top:20px;color:#16a34a;">✅ Welcome! Refreshing...</div>
+        </div>
+      </div>
+    `;
+  }
+
+  async function signUp() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { emailRedirectTo: window.location.href }
+    });
+    
+    if (error) {
+      alert(error.message);
+    } else {
+      document.getElementById('authForm').style.display = 'none';
       document.getElementById('authMessage').style.display = 'block';
       setTimeout(() => window.location.reload(), 2000);
     }
   }
 
   function showPaywall() {
-    const originalContent = document.body.innerHTML;
     document.body.innerHTML = \`
       <div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,0.96);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;">
         <div style="background:white;padding:40px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.15);max-width:420px;width:100%;text-align:center;border:1px solid #fef3c7;">
@@ -736,7 +804,7 @@
             <p style="font-size:15px;margin:10px 0;"><strong>Bank:</strong> CIMB Bank</p>
             <p style="font-size:15px;margin:10px 0;"><strong>Name:</strong> MUHAMMAD ALIF HAKIM</p>
             <p style="font-size:15px;margin:10px 0;"><strong>Account:</strong> 763514733</p>
-            <p style="font-size:14px;color:#666;margin-top:15px;text-align:center;">✅ Send receipt/screenshot to WhatsApp: <strong>+60123123709</strong><br>We'll unlock your account within minutes!</p>
+            <p style="font-size:14px;color:#666;margin-top:15px;text-align:center;">✅ Send receipt/screenshot to WhatsApp: <strong>+60 12-345 6789</strong><br>We'll unlock your account within minutes!</p>
           </div>
           
           <button onclick="signOut()" style="margin-top:10px;padding:10px 24px;background:#e5e7eb;color:#374151;border:none;border-radius:6px;cursor:pointer;font-size:15px;">Sign Out</button>
@@ -759,7 +827,6 @@
   }
 
   checkAccess();
-    </script>
-  
+</script>
 </body>
 </html>
